@@ -1,12 +1,13 @@
 /* Global Variables */
 const baseUrl = `https://api.openweathermap.org/data/2.5/weather?zip=`;
+// Personal API
 const API = "&appid=6511e30caa169d4d91446ee4520882a3&units=imperial";
 
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
 
-
+// """POST""" data to the Server-Side
 const postData = async (url = '', data = {}) => {
     const response = await fetch(url, {
         method: 'POST',
@@ -16,16 +17,9 @@ const postData = async (url = '', data = {}) => {
         },
         body: JSON.stringify(data),
     });
-
-    try {
-        const newData = await response.json();
-        return newData;
-    } catch (error) {
-        console.log("error", error);
-    }
 };
 
-
+// """GET""" getData from the External API "OpenWeatherMap"
 const getData = async (url = "", zipCode = "") => {
     const respone = await fetch(url + zipCode + API);
     try {
@@ -35,7 +29,7 @@ const getData = async (url = "", zipCode = "") => {
         console.log(error);
     }
 }
-
+// Gets projectData "Endpoint" Data and dynamically udapte the UI to match the returned values.
 const returnEndpointDataAndUpdateUI = async () => {
     const request = await fetch('/getProjectData');
     try {
@@ -47,11 +41,16 @@ const returnEndpointDataAndUpdateUI = async () => {
         console.log(error);
     }
 };
+// Adding Event Listner to the "Generate Key" to trigger all of the above 
+// functionalities to work asynchro. together.
 document.getElementById("generate").addEventListener("click", function () {
+    // Gets data from the API.
     getData(baseUrl, document.getElementById('zip').value).then(function (data) {
         data.date = newDate;
         data.userResponse = document.getElementById('feelings').value;
+        // Posts data to the server endpoint.
         postData("/postProjectData", data)
+            // retruns server endpoint's data and update the UI accordingly.
             .then(returnEndpointDataAndUpdateUI());
     });
 });
