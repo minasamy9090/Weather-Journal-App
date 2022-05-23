@@ -25,6 +25,8 @@ npm install body-parser
 node server.js
 ```
 
+Open your preferred browser, go to "localhost:8080".
+
 ## Authors and acknowledgment
 
 Mina Samy Hannalla
