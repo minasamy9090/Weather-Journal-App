@@ -5,7 +5,7 @@ const API = "&appid=6511e30caa169d4d91446ee4520882a3&units=imperial";
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
+let newDate = d.getMonth() + 1 + '.' + d.getDate() + '.' + d.getFullYear();
 
 // """POST""" data to the Server-Side
 const postData = async (url = '', data = {}) => {
